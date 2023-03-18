@@ -13,15 +13,15 @@ RPG clicker game made in Pygame, made to practice python.
 ![image](https://user-images.githubusercontent.com/5738476/226136782-71835251-7cfe-4c09-90d6-3bc4c5f01601.png)
 
 
-## TODO
-Currently the codebase is a big mess and many things would need to be improved:
-- Untangle UI from components
-- Move stats/etc into json files
-
-
 ## Credits
 Font: https://chequered.ink/
 
 Monster art: https://aekashics.itch.io/aekashics-librarium-librarium-static-batch-megapack
 
 Backgrounds: https://opengameart.org/content/backgrounds-3
+
+## TODO
+Currently the codebase is a big mess and many things would need to be improved:
+- Untangle UI from components
+- Move stats/etc into json files
+
