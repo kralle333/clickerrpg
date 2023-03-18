@@ -23,7 +23,7 @@ class Player:
     dmg_upgrade_index = 0
 
     upgrade_click_cost = [1, 2, 4, 8, 16, 32, 64, 128, 256]
-    upgrade_click_benefit = [100, 2, 3, 5, 8, 13, 21, 34, 55]
+    upgrade_click_benefit = [1, 2, 3, 5, 8, 13, 21, 34, 55]
     upgrade_dmg_cost = [5, 10, 20, 50, 100, 150, 200, 300, 400, 500,
                         600, 700, 800, 900, 1000]
     upgrade_dmg_benefit = [30, 50, 50, 50, 50, 50,

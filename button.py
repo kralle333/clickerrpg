@@ -35,7 +35,9 @@ class Button:
     def update(self):
         x,y = pygame.mouse.get_pos()
         self.is_over =  x >= self.x and x < self.x+self.width and y >= self.y and y < self.y+self.height
-        self.is_click = self.is_over and pygame.mouse.get_pressed()[0]
+        is_down = self.is_over and pygame.mouse.get_pressed()[0]
+        self.is_click = is_down and self.prev_press == False
+        self.prev_press = is_down
 
     def draw(self, screen):
         pygame.draw.rect(screen, self.border_color, self.border_rect)
