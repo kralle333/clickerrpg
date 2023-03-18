@@ -7,6 +7,12 @@ RPG clicker game made in Pygame, made to practice python.
 - Features 3 worlds each with 3 types of enemies and a boss.
 - When you are defeated you will start from the beginning again, but keeping all the upgrades you got.
 
+## Screenshots
+![image](https://user-images.githubusercontent.com/5738476/226136734-dd87b4a7-f6a4-46a7-8486-5c84b81af1bd.png)
+![image](https://user-images.githubusercontent.com/5738476/226136764-d7d62c78-41db-43ea-ae30-968975ccc039.png)
+![image](https://user-images.githubusercontent.com/5738476/226136782-71835251-7cfe-4c09-90d6-3bc4c5f01601.png)
+
+
 ## TODO
 Currently the codebase is a big mess and many things would need to be improved:
 - Untangle UI from components
