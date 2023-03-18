@@ -56,11 +56,11 @@ class GameController:
         desert.add_enemy(Enemy("Snek", "Desert Sand Snake.png",
                          100, 60, 5, 10, 50, 4, 10))
         desert.add_enemy(
-            Enemy("Bunny", "Desert Rock Bunny.png", 100, 15, 1, 10, 15, 50, 100))
+            Enemy("Bunny", "Desert Rock Bunny.png", 120, 15, 5, 10, 15, 50, 100))
         desert.add_enemy(
-            Enemy("Cactus", "Toxic Cactus B.png", 300, 120, 10, 100, 30, 20, 15))
+            Enemy("Cactus", "Toxic Cactus B.png", 300, 120, 20, 100, 30, 20, 15))
         desert.add_enemy(
-            Enemy("Tentacles", "Desert Sand Tentacle.png", 500, 30, 1, 20, 15, 50, 100))
+            Enemy("Tentacles", "Desert Sand Tentacle.png", 500, 20, 10, 100, 15, 50, 100))
         desert.level_min = 5
         desert.level_max = 10
         desert.set_boss(Enemy(
@@ -72,11 +72,11 @@ class GameController:
         ice.add_enemy(Enemy("Ice Cave Bat", "Ice Cave Bat.png",
                       200, 60, 5, 10, 50, 4, 10))
         ice.add_enemy(
-            Enemy("Ice Lion", "Ice Lion.png", 150, 15, 1, 10, 15, 50, 100))
+            Enemy("Ice Lion", "Ice Lion.png", 500, 15, 40, 80, 15, 50, 100))
         ice.add_enemy(
-            Enemy("Ice Golem", "Ice Golem.png", 600, 120, 10, 100, 30, 20, 15))
+            Enemy("Ice Golem", "Ice Golem.png", 2000, 500, 100, 300, 30, 20, 15))
         ice.add_enemy(
-            Enemy("Frozen Birdie", "Ice Avian.png", 1000, 30, 1, 20, 15, 50, 100))
+            Enemy("Frozen Birdie", "Ice Avian.png", 1200, 200, 40, 120, 15, 50, 100))
         ice.level_min = 15
         ice.level_max = 30
         ice.set_boss(Enemy(
