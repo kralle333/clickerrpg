@@ -22,7 +22,7 @@ class Player:
     click_upgrade_index = 0
     dmg_upgrade_index = 0
 
-    upgrade_click_cost = [1, 2, 4, 8, 16, 32, 64, 128, 256]
+    upgrade_click_cost = [1, 10, 20, 40, 80, 100, 150, 250, 500]
     upgrade_click_benefit = [1, 2, 3, 5, 8, 13, 21, 34, 55]
     upgrade_dmg_cost = [5, 10, 20, 50, 100, 150, 200, 300, 400, 500,
                         600, 700, 800, 900, 1000]
@@ -37,7 +37,7 @@ class Player:
     def __init__(self, initial_hp) -> None:
         self.max_hp = initial_hp
         self.next_level_xp = 110
-        self.speed = 80
+        self.speed = 120
         self.health_bar = ProgressBar(580, 68, 105, 24, 2, (0, 0, 0))
         self.health_bar.set_health_bar_colors()
         self.health_bar.set_progress(1)
@@ -79,7 +79,7 @@ class Player:
             self.xp = self.xp-self.next_level_xp
             self.next_level_xp = self.level * 20
             self.max_hp *= 1.2
-            self.attack *= 1.1 + random.random() * (1.4 - 1.1);
+            self.attack *= 1.1 + random.random() * (1.3 - 1.1);
             self.attack = int(self.attack)
             self.reset()
         return leveledUp
