@@ -3,8 +3,6 @@ from game_controller import GameController
 import pygame
 
 
-border = 10
-
 
 def main():
     pygame.init()
@@ -22,13 +20,8 @@ def main():
         clock.tick(60)
         screen.fill((0, 0, 0))
         
-        pygame.draw.rect(screen, (0, 0, 0),
-                         (480, 0, 720-480, 480))
-
-        pygame.draw.rect(screen, (100, 100, 100),
-                         (480+border, border, 720-480-border*2, 480-border*2))
-
-        game.update(screen)
+        game.update()
+        game.draw(screen)
 
         pygame.display.flip()
 

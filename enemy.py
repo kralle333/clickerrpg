@@ -20,7 +20,7 @@ class Enemy:
     spawn_chance = 0
 
     image = None
-    name_text = None
+    name_font = None
     health_bar = None
 
     level = 0
@@ -47,10 +47,10 @@ class Enemy:
     def get_health_pct(self):
         return self.current_hp/self.max_hp
 
-    def load_gfx(self, game_font):
+    def load_gfx(self, title_font):
         self.image = pygame.image.load(self.sprite)
-        self.name_text, _ = game_font.render(
-            f"ENEMY: {self.name} lvl {self.level}", (255, 255, 255))
+        self.name_font, _ = title_font.render(
+            f"{self.name} lvl {self.level}", (255, 255, 255))
 
         self.pos_x = 480/2 - self.image.get_width() / 2
         self.pos_y = 480/2 - self.image.get_height()/2
@@ -90,6 +90,6 @@ class Enemy:
 
         screen.blit(self.image, (self.pos_x+self.shake_x,
                     self.pos_y+self.shake_y))
-        screen.blit(self.name_text, (480/2 -
-                                     self.name_text.get_width()/2, 10))
+        screen.blit(self.name_font, (480/2 -
+                                     self.name_font.get_width()/2, 10))
         self.health_bar.draw(screen)

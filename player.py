@@ -22,23 +22,23 @@ class Player:
     click_upgrade_index = 0
     dmg_upgrade_index = 0
 
-    upgrade_click_cost = [10, 50, 100, 200, 400, 600, 800, 1000, 1200]
-    upgrade_click_benefit = [1, 1, 1, 2, 2, 2, 2, 2, 2]
-    upgrade_dmg_cost = [5, 10, 20, 30, 50, 70, 100, 120, 150, 170,
-                        190, 210, 220, 250, 300, 350, 400, 500, 600, 700, 800, 900, 1000]
-    upgrade_dmg_benefit = [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-                           5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5]
+    upgrade_click_cost = [1, 2, 4, 8, 16, 32, 64, 128, 256]
+    upgrade_click_benefit = [100, 2, 3, 5, 8, 13, 21, 34, 55]
+    upgrade_dmg_cost = [5, 10, 20, 50, 100, 150, 200, 300, 400, 500,
+                        600, 700, 800, 900, 1000]
+    upgrade_dmg_benefit = [30, 50, 50, 50, 50, 50,
+                           50, 50, 50, 50, 50, 50, 50, 50, 50, 50]
 
     upgrade_click_btn = None
     upgrade_dmg_btn = None
 
     health_bar = None
 
-    def __init__(self, hp, game_font) -> None:
-        self.max_hp = hp
-        self.next_level_xp = 20
+    def __init__(self, initial_hp) -> None:
+        self.max_hp = initial_hp
+        self.next_level_xp = 110
         self.speed = 80
-        self.health_bar = ProgressBar(600, 70, 100, 24, 2, (0, 0, 0))
+        self.health_bar = ProgressBar(580, 68, 105, 24, 2, (0, 0, 0))
         self.health_bar.set_health_bar_colors()
         self.health_bar.set_progress(1)
         self.reset()
@@ -47,14 +47,14 @@ class Player:
             os.path.join("art", "EightBitDragon-anqx.ttf"), 16)
 
         self.upgrade_click_btn = Button(
-            500, 360, 80, 80,
+            490, 360, 90, 80,
             (0, 120, 192),
             (51, 179, 255),
             (0, 0, 0),
             "Click",
             btn_font)
         self.upgrade_dmg_btn = Button(
-            615, 360, 80, 80,
+            600, 360, 90, 80,
             (0, 120, 192),
             (51, 179, 255),
             (0, 0, 0),
@@ -78,7 +78,10 @@ class Player:
             self.level += 1
             self.xp = self.xp-self.next_level_xp
             self.next_level_xp = self.level * 20
-            self.attack += random.randint(1, 3)
+            self.max_hp *= 1.2
+            self.attack *= 1.1 + random.random() * (1.4 - 1.1);
+            self.attack = int(self.attack)
+            self.reset()
         return leveledUp
 
     def get_dmg(self):
@@ -93,16 +96,11 @@ class Player:
         self.gold += enemy.gold
         return self.get_xp(enemy.xp)
 
-    def draw(self, screen, game_font):
-
-        game_font.render_to(screen, (525, 20), "Player Info", (150, 0, 0))
-        game_font.render_to(screen, (500, 70), "Health:", (0, 0, 0))
-        self.health_bar.draw(screen)
-
+    def update(self):
         self.upgrade_dmg_btn.update()
         self.upgrade_click_btn.update()
 
-        if self.upgrade_dmg_btn.is_click:
+        if self.upgrade_dmg_btn.is_click and self.dmg_upgrade_index < len(self.upgrade_dmg_cost):
             cost = self.upgrade_dmg_cost[self.dmg_upgrade_index]
             if self.gold >= cost:
                 self.gold -= cost
@@ -110,7 +108,7 @@ class Player:
                 self.dmg_upgrade_index += 1
             else:
                 pass  # floating text
-        if self.upgrade_click_btn.is_click:
+        if self.upgrade_click_btn.is_click and self.click_upgrade_index < len(self.upgrade_click_cost):
             cost = self.upgrade_click_cost[self.click_upgrade_index]
             if self.gold >= cost:
                 self.gold -= cost
@@ -119,22 +117,38 @@ class Player:
             else:
                 pass  # floating text
 
-        game_font.render_to(screen, (525, 320), "Upgrades", (150, 0, 0))
+    def draw(self, screen, game_font):
+
+        # BG
+        pygame.draw.rect(screen, (100, 100, 100),
+                         (480, 60, 220, 390))
+        #game_font.render_to(screen, (525, 20), "Player Info", (0, 0, 0))
+        game_font.render_to(screen, (490, 70), "Health:", (0, 0, 0))
+        self.health_bar.draw(screen)
+
+        game_font.render_to(screen, (490, 230),
+                            f"Atk Damage: {self.attack}", (0, 0, 0))
+        game_font.render_to(screen, (490, 270),
+                            f"Click Damage: {self.click_dmg}", (0, 0, 0))
+
+        game_font.render_to(screen, (528, 320), "Upgrades", (255, 255, 255))
         self.upgrade_dmg_btn.draw(screen)
         self.upgrade_click_btn.draw(screen)
 
-        game_font.render_to(screen, (515, 410),
-                            f"{self.upgrade_click_cost[self.click_upgrade_index]}g", (0, 0, 0))
-        game_font.render_to(screen, (630, 410),
-                            f"{self.upgrade_dmg_cost[self.dmg_upgrade_index]}g", (0, 0, 0))
+        if len(self.upgrade_click_cost) <= self.click_upgrade_index:
+            game_font.render_to(screen, (505, 410), "MAX", (0, 0, 0))
+        else:
+            game_font.render_to(screen, (505, 410),
+                                f"{self.upgrade_click_cost[self.click_upgrade_index]}g", (0, 0, 0))
+        if len(self.upgrade_dmg_cost) <= self.dmg_upgrade_index:
+            game_font.render_to(screen, (615, 410), "MAX", (0, 0, 0))
+        else:
+            game_font.render_to(screen, (615, 410),
+                                f"{self.upgrade_dmg_cost[self.dmg_upgrade_index]}g", (0, 0, 0))
 
-        game_font.render_to(screen, (500, 110),
+        game_font.render_to(screen, (490, 110),
                             f"Level: {self.level}", (0, 0, 0))
-        game_font.render_to(screen, (500, 150),
+        game_font.render_to(screen, (490, 150),
                             f"Xp: {self.xp}/{self.next_level_xp}", (0, 0, 0))
-        game_font.render_to(screen, (500, 190),
+        game_font.render_to(screen, (490, 190),
                             f"Gold: {self.gold}", (0, 0, 0))
-        game_font.render_to(screen, (500, 230),
-                            f"Damage: {self.attack}", (0, 0, 0))
-        game_font.render_to(screen, (500, 270),
-                            f"Click Damage: {self.click_dmg}", (0, 0, 0))

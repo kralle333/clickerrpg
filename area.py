@@ -1,6 +1,8 @@
 from progress_bar import ProgressBar, ProgressColor
 import random
+import pygame
 import copy
+import os
 
 
 def get_enemy_chance(e):
@@ -25,9 +27,11 @@ class Area:
 
     progress_bar = None
 
-    def __init__(self, name, color, enemies_to_beat) -> None:
+    def __init__(self, name, color,bg_sprite, enemies_to_beat) -> None:
         self.bg_color = color
+        self.bg_sprite = bg_sprite
         self.name = name
+        self.enemies = []
         self.enemies_to_beat.clear()
         self.progress_bar = ProgressBar(100, 440, 280, 20, 2, (0, 0, 0))
         self.progress_bar.set_progress_colors(
@@ -48,7 +52,7 @@ class Area:
 
     def get_next_enemy(self):
         if self.enemies_beaten >= len(self.enemies_to_beat):
-            return self.boss
+            return self.get_enemy_instance(self.boss)
         else:
             return self.get_enemy_instance(self.enemies[self.enemies_to_beat[self.enemies_beaten]])
 
@@ -66,8 +70,15 @@ class Area:
         instance.level = random.randint(self.level_min, self.level_max+1)
         return instance
 
+    def load_gfx(self):        
+        self.image = pygame.image.load(os.path.join("art", "backgrounds", self.bg_sprite))
+
+    def draw(self,screen):
+        screen.blit(self.image, (0,0))
+
+
     def draw_progress(self, screen, game_font):
-        game_font.render_to(screen, (100, 395),
+        game_font.render_to(screen, (100, 410),
                             f"{self.name} Progress:", (255, 255, 255))
         self.progress_bar.draw(screen)
 
